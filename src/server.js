@@ -16,7 +16,10 @@ const app = express();
 // Establish get route
 app.get('/person', (req, res, next) => {
   const message = `${req.query.name} is the name of your query`;
-  res.status(200).send(message);
+  // Convert message into an object, so that response message is in json
+  const formattedMessage = { message };
+  // Send message back in jason format
+  res.status(200).json(formattedMessage);
 });
 
 // Start server
