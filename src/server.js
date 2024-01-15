@@ -13,10 +13,10 @@ const PORT = process.env.PORT || 3000; // Fallback to 3000 is no variable in env
 const app = express();
 
 
-// Establish route
+// Establish get route
 app.get('/person', (req, res, next) => {
-  res.status(200).send('real data coming soon...');
-
+  const message = `${req.query.name} is the name of your query`;
+  res.status(200).send(message);
 });
 
 // Start server
