@@ -10,9 +10,9 @@ Basic API express server where middleware is written, tested and practice deploy
 
 ### Links and Resources
 
-<!-- - [GitHub Actions ci/cd](https://github.com/MelodicXP/server-deployment-practice/actions)
-- Dev [back-end server url](https://four01-server-deployment-practice-6k54.onrender.com)
-- Prod [back-end server url](https://four01-server-development-practice-prod.onrender.com) -->
+- [GitHub Actions ci/cd](https://github.com/MelodicXP/basic-server-express/actions)
+- Dev [back-end server url](https://four01-basic-server-express-dev.onrender.com)
+- Prod [back-end server url](https://four01-basic-server-express-prod.onrender.com)
 
 ### Collaborators
 
@@ -31,7 +31,7 @@ None required for this lab.
 #### Features / Routes
 
 - Feature One: Deploy as dev branch once ci/cd works.
-- Feature Two: Deploy as prod branch once all test pass.
+- Feature Two: Deploy as prod branch once all tests pass.
 
 #### Tests
 
@@ -48,4 +48,4 @@ None required for this lab.
 
 #### UML
 
-<!-- ![Lab-01-UML](assets/lab-01-uml.png) -->
+![Lab-02-UML](assets/Lab02UML.png)
