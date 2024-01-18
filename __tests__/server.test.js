@@ -9,11 +9,6 @@ const { app } = require('../src/server');
 // Feed app into supertest and assign to mockRequest variable
 const mockRequest = supertest(app);
 
-// Require external test .js files
-// const validator = require('../src/middleware/validator.test.js');
-// const logger = require('../src/middleware/logger.test.js');
-// const { request } = require('express');
-
 // ** Test route responds with correct info **
 describe('API Server', () => {
   it('handles root path', async () => {
@@ -23,21 +18,26 @@ describe('API Server', () => {
     expect(response.text).toEqual('Default route message');
   });
   
-  it('handles 404 a bad route', async () => {
+  it('handles 404 on a bad route \'/badRoute\'', async () => {
     const response = await mockRequest.get('/badRoute');
     expect(response.status).toEqual(404);
     expect(response.body.route).toEqual('/badRoute');
     expect(response.body.message).toEqual('Not Found');
   });
 
-  it('handles 404 on a bad method', async () => {
+  it('handles 404 on a bad method \'mockRequest.put\'', async () => {
     const response = await mockRequest.put('/person');
     expect(response.status).toEqual(404);
+    expect(response.body.route).toEqual('/person');
+    expect(response.body.message).toEqual('Not Found');
   });
 
-  it('handles 500 if no name in the query string', async () => {
+  it('handles 500 if no name in query string for \'/person\' route', async () => {
     const response = await mockRequest.get('/person');
     expect(response.status).toEqual(500);
+    expect(response.body.route).toEqual('/person');
+    expect(response.body.message).toBeTruthy();
+    expect(response.body.message).toEqual('Name query parameter is required');
   });
 
   it('handles 200 if name is in the query string', async () => {
@@ -51,5 +51,4 @@ describe('API Server', () => {
     expect(response.body).toEqual({ 'name': 'John' }); // Check if the response body is as expected
   });
 
-  
 });
