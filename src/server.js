@@ -3,7 +3,9 @@
 // Require use of libraries
 const express = require('express');
 
+// Require use of other .js files and its functions and properties
 const errorHandler500 = require('./error-handlers/500');
+const notFound404 = require('./error-handlers/404');
 const logger = require('./middleware/logger');
 const validator = require('./middleware/validator');
 
@@ -21,7 +23,7 @@ app.get('/', (req, res, next) => {
   res.status(200).send(message);
 });
 
-// Establish get person route, and use validator.js (middleware) to check if query has a name property, if no name force error
+// Establish get person route, and use validator.js (middleware) to check if query has a name property, if no name force error (send to erroHandler)
 app.get('/person', validator, (req, res, next) => {
   // Set message to display if query name is present after going through validator
   const name = req.query.name;
@@ -31,13 +33,16 @@ app.get('/person', validator, (req, res, next) => {
   res.status(200).json(formattedMessage);
 });
 
+// Error Handler - 404 - not found error (incorrect or non-existent path)
+app.use('*', notFound404);
+
+// Error Handler - 500 server error
+app.use(errorHandler500);
+
 // Start server
 function start() {
   app.listen(PORT, () => console.log(`listening on port ${PORT}`));
 }
-
-// Error Handler
-app.use(errorHandler500);
 
 // Export for use in other files
 module.exports = { start, app };
