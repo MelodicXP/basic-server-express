@@ -2,12 +2,8 @@
 
 // Require use of libraries
 const express = require('express');
-const dotenv = require('dotenv');
 
 const errorHandler500 = require('./error-handlers/500');
-
-// Load environment variables from .env
-dotenv.config();
 
 const PORT = process.env.PORT || 3000; // Fallback to 3000 is no variable in env file
 
@@ -47,4 +43,4 @@ function start() {
 app.use(errorHandler500);
 
 // Export for use in other files
-module.exports = { start };
+module.exports = { start, app };
