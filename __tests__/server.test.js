@@ -16,9 +16,18 @@ const mockRequest = supertest(app);
 
 // ** Test route responds with correct info **
 describe('API Server', () => {
+  it('handles root path', async () => {
+    const response = await mockRequest.get('/');
+    expect(response.status).toEqual(200);
+    expect(response.text).toBeTruthy();
+    expect(response.text).toEqual('Default route message');
+  });
+  
   it('handles 404 a bad route', async () => {
     const response = await mockRequest.get('/badRoute');
     expect(response.status).toEqual(404);
+    expect(response.body.route).toEqual('/badRoute');
+    expect(response.body.message).toEqual('Not Found');
   });
 
   it('handles 404 on a bad method', async () => {
@@ -41,4 +50,6 @@ describe('API Server', () => {
     expect(response.status).toEqual(200); // Check if the response status is 200
     expect(response.body).toEqual({ 'name': 'John' }); // Check if the response body is as expected
   });
+
+  
 });
