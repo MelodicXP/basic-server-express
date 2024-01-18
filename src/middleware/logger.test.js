@@ -1,10 +1,20 @@
-'use strict';
+const supertest = require('supertest');
+const { app } = require('../server'); 
 
-module.exports = (req, res, next) => {
+// Mocking console.log to test logger output
+const mockRequest = supertest(app);
 
-  // Performs a console.log with the request method and path
-  // Import this into your server and set it up to run at the application level for all routes
-  console.log(`Request Method: ${req.method}, Path: ${req.path}`);
-  next(); // Call next() to pass control to the next middleware function
+describe('Logger Middleware', () => {
+  it('logs the method and path of a request', async () => {
+    const consoleSpy = jest.spyOn(console, 'log');
 
-};
+    // Make a request to trigger the logger
+    await mockRequest.get('/some-route');
+
+    // Check if console.log has been called with the correct method and path
+    expect(consoleSpy).toHaveBeenCalledWith('Request Method: GET, Path: /some-route');
+
+    // Restore console.log to its original state
+    consoleSpy.mockRestore();
+  });
+});
