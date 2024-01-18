@@ -30,4 +30,15 @@ describe('API Server', () => {
     const response = await mockRequest.get('/person');
     expect(response.status).toEqual(500);
   });
+
+  it('handles 200 if name is in the query string', async () => {
+    const response = await mockRequest.get('/person?name=John');
+    expect(response.status).toEqual(200);
+  });
+
+  it('handles if output object is correct', async () => {
+    const response = await mockRequest.get('/person?name=John');
+    expect(response.status).toEqual(200); // Check if the response status is 200
+    expect(response.body).toEqual({ 'name': 'John' }); // Check if the response body is as expected
+  });
 });
