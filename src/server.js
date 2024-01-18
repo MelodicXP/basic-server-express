@@ -5,6 +5,7 @@ const express = require('express');
 
 const errorHandler500 = require('./error-handlers/500');
 const logger = require('./middleware/logger');
+const validator = require('./middleware/validator');
 
 const PORT = process.env.PORT || 3000; // Fallback to 3000 is no variable in env file
 
@@ -20,17 +21,9 @@ app.get('/', (req, res, next) => {
   res.status(200).send(message);
 });
 
-// Establish get person route
-app.get('/person', (req, res, next) => {
-
-  // If no name provided in query, next() sends off to error handler
-  if (!req.query.name) {
-    next('no name query present');
-    // Prevent further execution
-    return;
-  }
-
-  // Set message to display if query successful
+// Establish get person route, and use validator.js (middleware) to check if query has a name property, if no name force error
+app.get('/person', validator, (req, res, next) => {
+  // Set message to display if query name is present after going through validator
   const name = req.query.name;
   // Convert message into an object, so that response message is in json
   const formattedMessage = { name };
