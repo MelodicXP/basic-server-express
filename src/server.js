@@ -4,11 +4,15 @@
 const express = require('express');
 
 const errorHandler500 = require('./error-handlers/500');
+const logger = require('./middleware/logger');
 
 const PORT = process.env.PORT || 3000; // Fallback to 3000 is no variable in env file
 
 // Single instance of express
 const app = express();
+
+// Use logger for all routes
+app.use(logger);
 
 // Establish default route
 app.get('/', (req, res, next) => {
@@ -27,9 +31,9 @@ app.get('/person', (req, res, next) => {
   }
 
   // Set message to display if query successful
-  const message = `${req.query.name}'s name as query is successful`;
+  const name = req.query.name;
   // Convert message into an object, so that response message is in json
-  const formattedMessage = { message };
+  const formattedMessage = { name };
   // Send message back in jason format
   res.status(200).json(formattedMessage);
 });
