@@ -1,16 +1,19 @@
-'use strict';
+const supertest = require('supertest');
+const { app } = require('../server');
 
-// Check the query string for a name property
-// Send the request through when valid, forces an error when not
+// Mock the app with supertest
+const mockRequest = supertest(app);
 
-// Validator middleware
-module.exports = (req, res, next) => {
-  // Check if the 'name' query parameter exists
-  if (!req.query.name) {
-    // If 'name' is not present, pass an error message to the next middleware
-    next('Name query parameter is required');
-  } else {
-    // If 'name' is present, continue to the next middleware/route handler
-    next();
-  }
-};
+describe('Validator Middleware', () => {
+  it('allows requests with a valid name query parameter', async () => {
+    const response = await mockRequest.get('/person?name=John');
+    // Assuming /person route exists and it returns a status code of 200 when successful
+    expect(response.status).toEqual(200);
+  });
+
+  it('throws an error when name query parameter is missing', async () => {
+    const response = await mockRequest.get('/person');
+    // Assuming your error handler returns a status code of 400 or 500 when an error is thrown
+    expect(response.status).toBeGreaterThanOrEqual(400);
+  });
+});
