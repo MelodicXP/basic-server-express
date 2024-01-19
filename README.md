@@ -10,6 +10,7 @@ Basic API express server where middleware is written, tested and practice deploy
 
 ### Links and Resources
 
+- [Pull Request](https://github.com/MelodicXP/basic-server-express/pull/1)
 - [GitHub Actions ci/cd](https://github.com/MelodicXP/basic-server-express/actions)
 - Dev [back-end server url](https://four01-basic-server-express-dev.onrender.com)
 - Prod [back-end server url](https://four01-basic-server-express-prod.onrender.com)
