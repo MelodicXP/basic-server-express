@@ -26,11 +26,11 @@ app.get('/', (req, res, next) => {
 // Establish get person route, and use validator.js (middleware) to check if query has a name property, if no name force error (send to erroHandler)
 app.get('/person', validator, (req, res, next) => {
   // Set message to display if query name is present after going through validator
-  const name = req.query.name;
+  // const name = req.query.name;
   // Convert message into an object, so that response message is in json
-  const formattedMessage = { name };
-  // Send message back in jason format
-  res.status(200).json(formattedMessage);
+  // const formattedMessage = { name };
+  // Send message back in json format
+  res.status(200).json(req.query);
 });
 
 // Error Handler - 404 - not found error (incorrect or non-existent path)

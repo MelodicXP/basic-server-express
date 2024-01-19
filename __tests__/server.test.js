@@ -48,6 +48,8 @@ describe('API Server', () => {
   it('handles if output object is correct', async () => {
     const response = await mockRequest.get('/person?name=John');
     expect(response.status).toEqual(200); // Check if the response status is 200
+    let nameJson = JSON.stringify({name: 'John'});
+    expect(response.text).toEqual(nameJson);
     expect(response.body).toEqual({ 'name': 'John' }); // Check if the response body is as expected
   });
 

@@ -1,19 +1,26 @@
-const supertest = require('supertest');
-const { app } = require('../server');
+'use strict';
 
-// Mock the app with supertest
-const mockRequest = supertest(app);
+const validator = require('../middleware/validator');
 
-describe('Validator Middleware', () => {
-  it('allows requests with a valid name query parameter', async () => {
-    const response = await mockRequest.get('/person?name=John');
-    // Assuming /person route exists and it returns a status code of 200 when successful
-    expect(response.status).toEqual(200);
+describe('validator middleware', () => {
+  let req = {query: {name: 'John'}};
+  let res = {};
+  let next = jest.fn();
+
+  // Happy path - success
+  it('validates string query is present as expected', () => {
+    validator(req, res, next);
+
+    expect(next).toHaveBeenCalledWith();
   });
 
-  it('throws an error when name query parameter is missing', async () => {
-    const response = await mockRequest.get('/person');
-    // Assuming your error handler returns a status code of 400 or 500 when an error is thrown
-    expect(response.status).toBeGreaterThanOrEqual(400);
+  // Fail if no name in query - unsccessful
+  it('fails appropriately if no query name', () => {
+    // created a key of notName, which will throw an error as expects 'name'
+    req = {query: {notName: 'John'}};
+    validator(req, res, next);
+
+    // if no name in query, next would be called with error message (error message string established in validator.js, line 11)
+    expect(next).toHaveBeenCalledWith('Name query parameter is required');
   });
 });
